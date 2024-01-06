@@ -2,7 +2,7 @@
 """
 This module contains data definition for a City
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class City(BaseModel):

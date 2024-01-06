@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """
-This module contains class console that defines the command intepreter for the project.
+This module contains class console that defines the command intepreter.
 """
 import cmd
 from models.amenity import Amenity
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -26,6 +26,7 @@ class_names = {
 
 objects = storage.all()
 
+
 class HBNBCommand(cmd.Cmd):
     """
     Console class inheriting from the Cmd superclass
@@ -44,9 +45,12 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
+    def emptyline(self):
+        pass
+
     def do_create(self, arg):
         """"
-        Creates a new instance of BaseModel and saves it to json file and prints the id
+        Creates a new instance of BaseModel and saves it.
         """
         if arg is not None:
             if arg in class_names.keys():
@@ -57,10 +61,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         else:
             print("** class name missing **")
-    
+
     def do_show(self, arg):
         """
-        Prints the string representation of an instance based on the class name and id.
+        Prints the string representation of an instance..
 
         Vars:
             arg_list(list): Argument vector
@@ -75,12 +79,13 @@ class HBNBCommand(cmd.Cmd):
         elif arg_list[0]+"."+arg_list[1] not in objects.keys():
             print("** no instance found **")
         else:
-            print(class_names[arg_list[0]](**objects[arg_list[0]+"."+arg_list[1]]))
+            key = arg_list[0]+"."+arg_list[1]
+            print(class_names[arg_list[0]](**objects[key]))
 
     def do_destroy(self, args):
         """
         Deletes an instance based on classname and id
-        
+
         Vars:
             arg_list(list): Argument vector
         """
@@ -100,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-        Prints all string representation of all instances based on the classname
+        Prints all string representation of all instances
 
         Vars:
             str_rep(list): A list of string representation of all instances
@@ -123,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """
-        Updates an instance based on the class name and id by adding or updating attribute
+        Updates an instance based on the class name and id.
 
         """
         arg_list = args.split(" ")
@@ -140,7 +145,8 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg_list) < 4:
             print("** value missing **")
         else:
-            obj_to_update = class_names[arg_list[0]](**objects[arg_list[0]+"."+arg_list[1]])
+            key = arg_list[0]+"."+arg_list[1]
+            obj_to_update = class_names[arg_list[0]](**objects[key])
             setattr(obj_to_update, arg_list[2], ' '.join(arg_list[3:]))
             del objects[arg_list[0]+"."+arg_list[1]]
             storage.__objects = objects
@@ -158,7 +164,7 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, args):
         """
-        Default method to accept input in the form <class name>.<method>() or print error message on unknown command.
+        Default method to accept input in the form <class name>.<method>().
 
         Vars:
             cl_name: Class Name
@@ -173,31 +179,32 @@ class HBNBCommand(cmd.Cmd):
                     self.do_all(cl_name)
                 elif method == "count":
                     self.count(cl_name)
-                elif re.search("show\(\"[\S]+\"", method):
+                elif re.search("show.\"[\S]+\"", method):
                     method, id = method.split('(')
                     id = id.strip('"')
                     self.do_show(str(cl_name + " " + id))
-                elif re.search("destroy\(\"[\S]+\"", method):
+                elif re.search("destroy.\"[\S]+\"", method):
                     method, id = method.split('(')
                     id = id.strip('"')
                     self.do_destroy(str(cl_name + " " + id))
-                elif re.search("update\(\"[\S]+,", method):
+                elif re.search("update.\"[\S]+,", method):
                     method, attrs = method.split('(')
                     attrs = attrs.split(",")
                     if '{' not in attrs[1]:
                         attrs = [attr.strip(' "') for attr in attrs]
                         self.do_update(str(cl_name + " " + " ".join(attrs)))
                     elif "{" in attrs[1]:
-                        attr_dict = eval(','.join(attrs[1:]))                        
+                        attr_dict = eval(','.join(attrs[1:]))
                         for key, val in attr_dict.items():
-                            arg = str(cl_name + " " + attrs[0].strip('"') + " " + key + " " + val)
+                            first_part = cl_name + " " + attrs[0].strip('"')
+                            arg = str(first_part + " " + key + " " + val)
                             self.do_update(arg)
 
             else:
-                print(f"** unknown syntax: {args} **")               
+                print(f"** unknown syntax: {args} **")
         except Exception:
             print(f"** unknown syntax: {args} **")
-        
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

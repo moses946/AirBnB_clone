@@ -2,7 +2,7 @@
 """
 This module contains data definition for an amenity
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):

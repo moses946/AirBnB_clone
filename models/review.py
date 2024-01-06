@@ -2,7 +2,7 @@
 """
 This module contains data definition for a review
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class Review(BaseModel):

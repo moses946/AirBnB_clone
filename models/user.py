@@ -2,7 +2,7 @@
 """
 This module contains definition for a single user
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class User(BaseModel):
@@ -15,7 +15,7 @@ class User(BaseModel):
         first_name(string): user's firstname
         last_name(string): user's lastname
     """
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
         self.email = ''
         self.password = ''

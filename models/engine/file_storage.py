@@ -7,7 +7,7 @@ import json
 
 class FileStorage:
     """
-    Serializes instances to a JSON file and deserializes JSON file to instances.
+    Serializes instances to a JSON and deserializes JSON to instances.
     Attr:
         __file_path: Path to a JSON file
         __objects: Dictionary storing all objects written to the JSON file
@@ -54,7 +54,7 @@ class FileStorage:
     def reload(self):
         """
         Deserializes JSON object from file to __objects if file exists
-        
+
         Vars:
             json_string(str): JSON string loaded from file
             file: Open JSON file buffer
@@ -62,6 +62,6 @@ class FileStorage:
         try:
             with open(self.__file_path, "r") as file:
                 self.__objects = json.load(file)
-                file.close()    
+                file.close()
         except FileNotFoundError:
             pass

@@ -2,7 +2,7 @@
 """
 This module contains data definition for a state
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
@@ -12,6 +12,6 @@ class State(BaseModel):
     Attr:
         name(str): Name of state
     """
-    def __init__(self,*args,**kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
         self.name = ''

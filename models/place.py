@@ -2,7 +2,7 @@
 """
 This module contains data definition for a place
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
@@ -35,4 +35,3 @@ class Place(BaseModel):
         self.latitude = 0.0
         self.longitude = 0.0
         self.amenity_ids = []
-

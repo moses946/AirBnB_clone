@@ -2,7 +2,7 @@
 Test Module for BaseModel class.
 """
 import unittest
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 from datetime import datetime
 from models.engine.file_storage import FileStorage
 
