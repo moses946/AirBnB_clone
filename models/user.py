@@ -15,9 +15,10 @@ class User(BaseModel):
         first_name(string): user's firstname
         last_name(string): user's lastname
     """
+    email = ''
+    password = ''
+    first_name = ''
+    last_name = ''
+
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
-        self.email = ''
-        self.password = ''
-        self.first_name = ''
-        self.last_name = ''

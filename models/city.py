@@ -13,7 +13,8 @@ class City(BaseModel):
         state_id(str): Equals to State.id
         name(str): Name of city
     """
+    state_id = ""
+    name = ""
+
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
-        self.state_id = ""
-        self.name = ""

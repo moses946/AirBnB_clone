@@ -12,6 +12,7 @@ class Amenity(BaseModel):
     Attrs:
         name(str): name of amenity
     """
+    name = ''
+
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
-        self.name = ""
